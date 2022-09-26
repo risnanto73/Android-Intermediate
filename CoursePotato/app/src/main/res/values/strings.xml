@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CoursePotato</string>
+    <string name="score_counter">Score Counter</string>
+    <string name="team_a">Team A</string>
+    <string name="team_b">Team B</string>
+    <string name="_0">0</string>
+    <string name="_1">-1</string>
+    <string name="_plus1">+1</string>
+    <string name="reset">Reset</string>
+</resources>
