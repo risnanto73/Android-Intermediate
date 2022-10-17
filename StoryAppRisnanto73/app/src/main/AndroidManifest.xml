@@ -23,19 +23,19 @@
         android:theme="@style/Theme.StoryAppRisnanto73"
         tools:targetApi="31">
         <activity
-            android:name=".activity.AddStroies.CameraXActivity"
+            android:name=".activity.addstroies.CameraXActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.AddStroies.AddStroiesActivity"
+            android:name=".activity.addstroies.AddStroiesActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.Details.DetailsActivity"
+            android:name=".activity.details.DetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.Stories.ListStoriesActivity"
+            android:name=".activity.stories.ListStoriesActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.Main.MainRouteActivity"
+            android:name=".activity.main.MainRouteActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,10 +44,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.Register.RegisterActivity"
+            android:name=".activity.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.Login.LoginActivity"
+            android:name=".activity.login.LoginActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

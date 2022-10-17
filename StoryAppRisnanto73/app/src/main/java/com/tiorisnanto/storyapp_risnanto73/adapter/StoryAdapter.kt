@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tiorisnanto.storyapp_risnanto73.R
-import com.tiorisnanto.storyapp_risnanto73.activity.Details.DetailsActivity
+import com.tiorisnanto.storyapp_risnanto73.activity.details.DetailsActivity
 import com.tiorisnanto.storyapp_risnanto73.data.remote.response.ListStoryItem
 import com.tiorisnanto.storyapp_risnanto73.databinding.ItemListStoryBinding
 import com.tiorisnanto.storyapp_risnanto73.helper.DiffCallback
-import com.tiorisnanto.storyapp_risnanto73.helper.Helper
 import java.util.*
 
 class StoryAdapter :  RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
