@@ -1,0 +1,124 @@
+ 
+#### INTEGRATION TEST @MediumTest
+    #### ListStoriesActivityTest
+        ### getStories_Success() [Pengecekan pengambilan data stories dari network]
+            - Memastikan bahwa stories tampil
+            - Kemudian => Memastikan stories terbaru yang terbuka
+
+        ### getStory_Error() [Pengecekan pengambilan data stories dari network]
+            - Memastikan bahwa stories tampil, jika ada dalam local database
+            - Memastikan bahwa TextView "something went wrong." tampil dilayar
+ 
+ #### END TO END TEST @LargeTest ####
+    #### ListStoryActivityEndToEndTest
+        ### loadListStories()
+            - Asumsi user telah melakukan login
+            - Kemudian => List Stories telaj muncul
+            - Kemudian => Memastikan ListStoriesActivity terbuka
+            - Kemudian => Memastikan RecyclerView berkerja dengan baik ketika melakukan scroll
+            - Kemudian => Memastikan SwipeRefreshLayout tampil dengan baik
+            - Kemudian => Memastikan button untuk tambah stories/posting stories tampil pada layar
+            - Kemudian => Memastikan button untuk melihat stories pada Googgle Maps tampil pada layar 
+            - Kemudian => Melakukan aksi klik pada item pertama di RecyclerView
+ 	
+        ### loadDetailStories()
+            - Asumsi user telah melakukan login
+            - Kemudian => List Stories telaj muncul
+            - Kemudian => Melakukan aksi klik pada item/card pertama di RecyclerView
+            - Kemudian => Memastikan deskripsi stories tampil pada layar
+            - Kemudian => Memastikan nama pengirim stories tampil pada layar
+
+        ### loadStoriesMap()
+            - Asumsi user telah login dan memperbolehkan aplikasi untuk menggunakan service lokasi
+            - Melihat List Cerita
+            - Melakukan aksi klik pada tombol untuk melihat stories pada Googgle map tampil
+            - Memastikan bahwa map tampil
+
+        ### loadAddStory()
+            - Asumsi user telah login
+            - Kemudian => Melihat List Cerita
+            - Kemudian => Melakukan aksi klik pada tombol untuk posting stories
+            - Kemudian => Memastikan bahwa tempat untuk preview gambar tampil
+            - Kemudian => Memastikan bahwa tombol untuk menambahkan lokasi sekarang tampil
+            - Kemudian => Memastikan bahwa tombol untuk membuka kamera tampil
+            - Kemudian => Memastikan bahwa tombol untuk membuka galeri tampil
+            - Kemudian => Memastikan bahwa untuk mengunggah stories tampil
+
+
+#### UNIT TEST ####
+        ### AddStoriesViewModelTest ###
+            - Ketika function `when postStories() is called Should Not Null and Return Success`() berhasil menambahkan stories,
+            - Maka =>  ResultResponse.Success bernilai true,
+            - Sehingga => expectedResponse sama dengan ResultResponse.Success(dummyResponse),
+            - Sehingga => expectedResponse dan actualResponse sama
+            
+        ### DetailStoriesViewModelTest ###
+            - Ketika function `when setDetails() is called Should Success`() berhasil menampilkan data stories,
+            - Maka => expectedStories sama dengan dummyStory,
+            - Sehingga => actualStories sama dengan itemStories,
+            - Sehingga => dan actualStories sama
+            
+        ### LoginViewModelTest
+            - Ketika berhasil login,
+            - Maka => ResultResponse.Success bernilai true,
+            - Kemudian => bahwa actualResponse tidak kosong,
+            - Sehingga => sama dengan ResultResponse.Success,
+            - Sehingga => sama dengan actualResponse,
+            - yang berarti data mengembalikan nilai yang sama berupa data User yakni name, userId dan token
+            
+        ### MainViewModelTest ###
+            - Ketika berhasil mendapatkan data User dari local (datastore),
+            - Kemudian => memastikan data local tidak kosong,
+            - Sehingga => local dengan data dummyUserModel sama,
+            
+        ### MapsViewModelTest ###
+            - Apabila => funcrion `when getStories() is Called Should Not Null and Return Success`() berhasil mendapatkan data stories map,
+            - Maka => ResultResponse.Success bernilai true,
+            - Kemudian => bahwa actualStories tidak kosong,
+            - Sehingga => actualResponse dan ResultResponse.Success sama,
+            - Kemudian => memastikan bahwa ukuran data asli(actualStories) dengan data dummyMaps sama 
+            - Apabila => function `when Network Error Should Return Error`() gagal mendapatkan data stories map,
+            - ResultResponse.Error bernilai false,
+            - Kemudian => bahwa actualStories tidak kosong
+            - actualStories dan ResultResponse.Error sama
+            
+        ### RegisterViewModelTest
+            - Apabila => function `when register() is Called Should Not Null and Return Success`() berhasil melakukan register
+            - Maka => ResultResponse.Success bernilai true,
+            - Kemudian => Memastikan bahwa actualResponse tidak kosong,
+            - Sehingga => actualResponse dan ResultResponse.Success sama,
+            - Kemudian => Memastikan bahwa data dummyRespon dan data actualResponse sama
+            - Apabila => function 'when Network Error Should Return Error`() gagal melakukan register
+            - Sehingga => ResultResponse.Error bernilai false,
+            - Kemudian => memastikan bahwa actualResponse tidak kosong,
+            - Sehingga =>  dan ResultResponse.Error
+            
+        ### ListStoryViewModelTest ###
+            - Apabila => function `when Get Stories Should Not Null`() berhasil mendapatkan data list stories,
+            - Kemudian => memastikan bahwa data tidak kosong,
+            - Kemudian => memastikan bahwa ukuran data asli dengan data dummy sama 
+
+
+        ### StoriesRepositoryTest ###
+            - Ketika function `when login() is called Should  Not Null`() dipanggil maka seharusnya tidak dapat mengembalikan nilai null dan mengembalikan nilai User berupa Name, userId, dan token
+            - Ketika function `when register() is called Should  Not Null`() dipanggil maka seharusnya tidak dapat mengembalikan nilai null
+            - Ketika function `when getStoriesMap() is called Should Not Null`() dipanggil maka seharusnya tidak dapat mengembalikan nilai null dan mengembalikan data stories
+            - Ketika function `when postStories() is called Should Not Null`() dipanggil maka seharusnya tidak dapat mengembalikan nilai null 
+            - Ketika function `when getPagingStories() is called Should Not Null`() dipanggil maka seharusnya tidak dapat mengembalikan nilai null dan mengembalikan PagingData
+	  
+        ###
+        - Ketika gagal menambahkan stories,
+        - Maka => ResultResponse.Error bernilai false,
+        - Sehingga => expectedResponse sama dengan ResultResponse.Error(dummyResponseError),
+        - Sehingga => actualResponse dan ResultResponse.Error sama
+
+        ### 
+        - Ketika gagal login,
+        - Maka => ResultResponse.Error bernilai false,
+        - Kemudian => memastikan bahwa actualResponse tidak kosong,
+        - Sehingga => dan ResultResponse.Error sama,
+        - yang berarti mengembalikan data yang sama berupa error
+        
+        ### 
+        - Ketika berhasil melakukan logout,
+        - proses logout dengan mainVideModel denan userPreference sama
