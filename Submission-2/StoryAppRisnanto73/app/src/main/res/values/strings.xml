@@ -56,5 +56,6 @@
     <string name="detail_title"> Details Stories</string>
     <string name="name">Name :</string>
     <string name="settings">Setting</string>
+    <string name="created">Created by</string>
 
 </resources>

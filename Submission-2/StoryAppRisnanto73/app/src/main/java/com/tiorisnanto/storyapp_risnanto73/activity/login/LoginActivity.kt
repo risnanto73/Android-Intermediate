@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -80,10 +81,24 @@ class LoginActivity : AppCompatActivity() {
         binding.btnSignIn.isEnabled = resultEmail != null && resultPass != null &&
                 binding.etPass.text.toString().length >= 8 &&
                 Helper.isEmailValid(binding.etEmail.text.toString())
+
+
     }
 
     private fun playAnimation() {
         ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 600
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        ObjectAnimator.ofFloat(binding.tvLogin, View.TRANSLATION_X, 30f, 60f).apply {
+            duration = 600
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        ObjectAnimator.ofFloat(binding.btnSignIn, View.TRANSLATION_X, 30f, 60f).apply {
             duration = 600
             repeatCount = ObjectAnimator.INFINITE
             repeatMode = ObjectAnimator.REVERSE
@@ -166,6 +181,9 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+        binding.ivSetting.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
     }
 

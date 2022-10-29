@@ -1,6 +1,8 @@
 package com.tiorisnanto.storyapp_risnanto73.activity.addstroies
 
 import android.Manifest
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -67,6 +69,30 @@ class AddStroiesActivity : AppCompatActivity() {
 
         getPermission()
         buttonListeners()
+        playAnimation()
+    }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.ivPreview, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 600
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val gallery = ObjectAnimator.ofFloat(binding.btnGallery, View.ALPHA, 1f).setDuration(500)
+        val camerax = ObjectAnimator.ofFloat(binding.btnCameraX, View.ALPHA, 1f).setDuration(500)
+        val desc = ObjectAnimator.ofFloat(binding.etDescription, View.ALPHA, 1f).setDuration(500)
+        val location = ObjectAnimator.ofFloat(binding.switchCompact, View.ALPHA, 1f).setDuration(500)
+        val upload = ObjectAnimator.ofFloat(binding.btnUpload, View.ALPHA, 1f).setDuration(500)
+
+        val together = AnimatorSet().apply {
+            playTogether(desc, location, upload)
+        }
+
+        AnimatorSet().apply {
+            playSequentially(gallery, camerax, together)
+            start()
+        }
     }
 
     private fun buttonListeners() {
@@ -97,7 +123,7 @@ class AddStroiesActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            // Lokasi Permision diterima, lalu set lokasi
+            // Lokasi Permision diterima, lalu nge-set lokasi
             fusedLocationClients.lastLocation.addOnSuccessListener { location->
                 if (location != null) {
                     lokasi = location

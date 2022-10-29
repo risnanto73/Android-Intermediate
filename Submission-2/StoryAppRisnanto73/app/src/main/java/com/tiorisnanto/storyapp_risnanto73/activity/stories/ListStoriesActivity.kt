@@ -72,6 +72,11 @@ class ListStoriesActivity : AppCompatActivity() {
         binding?.ivSetting?.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
+        binding?.fabAddStories?.setOnClickListener {
+            val moveToAddStoriesActivity = Intent(this, AddStroiesActivity::class.java)
+            moveToAddStoriesActivity.putExtra(AddStroiesActivity.EXTRA_USER, user)
+            startActivity(moveToAddStoriesActivity)
+        }
     }
 
     // update data when swipe

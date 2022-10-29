@@ -52,8 +52,8 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun displayResults() {
-        binding.tvName.text = "${getString(R.string.name)} : ${details.storiesItem.name}"
-        binding.tvDescription.text = "${getString(R.string.description)} : ${details.storiesItem.description}"
+        binding.tvName.text = details.storiesItem.name
+        binding.tvDescription.text = details.storiesItem.description
         Glide.with(binding.ivStories)
             .load(details.storiesItem.photoUrl)
             .placeholder(R.drawable.ic_baseline_library_books_24)

@@ -76,7 +76,9 @@
 
         <com.tiorisnanto.storyapp_risnanto73.cutomview.MyButtonLogin
             android:id="@+id/btn_signIn"
-            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:alpha="0"

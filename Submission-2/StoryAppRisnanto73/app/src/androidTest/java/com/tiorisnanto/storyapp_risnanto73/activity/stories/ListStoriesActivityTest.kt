@@ -8,20 +8,12 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
-import androidx.test.espresso.contrib.RecyclerViewActions.scrollTo
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import com.tiorisnanto.storyapp_risnanto73.JsonConverters
-import com.tiorisnanto.storyapp_risnanto73.R
-import com.tiorisnanto.storyapp_risnanto73.activity.details.DetailsActivity
 import com.tiorisnanto.storyapp_risnanto73.data.model.UserModel
 import com.tiorisnanto.storyapp_risnanto73.data.remote.retrofit.ApiConfig
 import com.tiorisnanto.storyapp_risnanto73.utils.EspressoIdlingResource
@@ -31,6 +23,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.tiorisnanto.storyapp_risnanto73.R
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
@@ -52,13 +45,13 @@ class ListStoriesActivityTest {
     fun setUp() {
         mockWebServer.start(8080)
         ApiConfig.BASE_URL = "http://127.0.0.1:8080/"
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResources)
     }
 
     @After
     fun tearDown() {
         mockWebServer.shutdown()
-        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResources)
     }
 
     @Test
@@ -68,7 +61,7 @@ class ListStoriesActivityTest {
         scenario = launchActivity(intent)
 
         onView(withId(R.id.rv_story)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-        onView(withId(R.id.iv_story)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_name)).check(matches(isDisplayed()))
 
     }
 

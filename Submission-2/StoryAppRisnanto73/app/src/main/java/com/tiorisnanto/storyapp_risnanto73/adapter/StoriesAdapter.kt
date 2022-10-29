@@ -34,12 +34,12 @@ class StoriesAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(stories: ListStoriesItem) {
-            Glide.with(binding.imgItemImage)
+            Glide.with(binding.ivStories)
                 // URL Avatar
                 .load(stories.photoUrl)
                 .placeholder(R.drawable.ic_baseline_library_books_24)
                 .error(R.drawable.ic_baseline_library_books_24)
-                .into(binding.imgItemImage)
+                .into(binding.ivStories)
             binding.tvName.text = stories.name
             binding.tvDescription.text = stories.description
 
@@ -48,7 +48,7 @@ class StoriesAdapter :
                 intent.putExtra(DetailsActivity.EXTRA_STORIES, stories)
                 val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     binding.root.context as Activity,
-                    Pair.create(binding.imgItemImage, "image"),
+                    Pair.create(binding.ivStories, "image"),
                     Pair.create(binding.tvName, "name"),
                     Pair.create(binding.tvDescription, "description")
                 )
