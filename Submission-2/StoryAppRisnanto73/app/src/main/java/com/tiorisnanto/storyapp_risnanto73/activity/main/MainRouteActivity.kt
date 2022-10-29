@@ -12,9 +12,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.tiorisnanto.storyapp_risnanto73.MainActivity
-import com.tiorisnanto.storyapp_risnanto73.R
 import com.tiorisnanto.storyapp_risnanto73.activity.login.LoginActivity
-import com.tiorisnanto.storyapp_risnanto73.activity.viewmodel.ViewModelFactory
 import com.tiorisnanto.storyapp_risnanto73.activity.viewmodel.ViewModelUserFactory
 import com.tiorisnanto.storyapp_risnanto73.data.model.UserPreferences
 import com.tiorisnanto.storyapp_risnanto73.databinding.ActivityMainRouteBinding

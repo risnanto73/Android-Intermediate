@@ -3,11 +3,13 @@ package com.tiorisnanto.storyapp_risnanto73.activity.stories
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tiorisnanto.storyapp_risnanto73.activity.addstroies.AddStroiesActivity
@@ -40,16 +42,41 @@ class ListStoriesActivity : AppCompatActivity() {
         _binding = ActivityListStoriesBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.hide()
+
+//        //SupportActionBar
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         user = intent.getParcelableExtra(EXTRA_USER)!!
 
-
         initAdapter()
         initSwipeToRefresh()
-        initToolbar()
         buttonListener()
+    }
+
+    private fun buttonListener() {
+        binding?.ivAddStory?.setOnClickListener {
+            val moveToAddStoriesActivity = Intent(this, AddStroiesActivity::class.java)
+            moveToAddStoriesActivity.putExtra(AddStroiesActivity.EXTRA_USER, user)
+            startActivity(moveToAddStoriesActivity)
+        }
+        binding?.ivMaps?.setOnClickListener {
+            val moveToMapStory = Intent(this, MapsActivity::class.java)
+            moveToMapStory.putExtra(AddStroiesActivity.EXTRA_USER, user)
+            startActivity(moveToMapStory)
+        }
+        binding?.ivBack?.setOnClickListener {
+            onBackPressed()
+        }
+        binding?.ivSetting?.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
+    }
+
+    // update data when swipe
+    private fun initSwipeToRefresh() {
+        binding?.swipeRefresh?.setOnRefreshListener { adapter.refresh() }
     }
 
     private fun initAdapter() {
@@ -74,37 +101,14 @@ class ListStoriesActivity : AppCompatActivity() {
             else binding?.viewError?.root?.visibility = View.GONE
         }
 
-        viewModel.getStories(user.token).observe(this) {
-            adapter.submitData(lifecycle, it)
+        viewModel.getStories(user.token).observe(this) { pagingData ->
+            adapter.submitData(lifecycle, pagingData)
         }
-    }
-
-    // update data when swipe
-    private fun initSwipeToRefresh() {
-        binding?.swipeRefresh?.setOnRefreshListener { adapter.refresh() }
-    }
-
-    private fun initToolbar() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    private fun buttonListener() {
-        binding?.ivAddStory?.setOnClickListener {
-            val moveToAddStoryActivity = Intent(this, AddStroiesActivity::class.java)
-            moveToAddStoryActivity.putExtra(AddStroiesActivity.EXTRA_USER, user)
-            startActivity(moveToAddStoryActivity)
-        }
-        binding?.ivMaps?.setOnClickListener {
-            val moveToMapStory = Intent(this, MapsActivity::class.java)
-            moveToMapStory.putExtra(AddStroiesActivity.EXTRA_USER, user)
-            startActivity(moveToMapStory)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

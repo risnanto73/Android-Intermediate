@@ -36,9 +36,8 @@ class AddStroiesActivity : AppCompatActivity() {
 
     companion object {
         const val CAMERA_X_RESULT = 200
-        private const val TAG = "AddStoryActivity"
+        private const val TAG = "AddStroiesActivity"
         const val EXTRA_USER = "user"
-
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
@@ -48,7 +47,7 @@ class AddStroiesActivity : AppCompatActivity() {
     private var getFile: File? = null
     private var result: Bitmap? = null
     private var lokasi: Location? = null
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var fusedLocationClients: FusedLocationProviderClient
     private val viewModel: AddStroiesViewModel by viewModels {
         ViewModelFactory.getInstance(this)
     }
@@ -57,15 +56,20 @@ class AddStroiesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddStroiesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Support Action Bar
         supportActionBar?.title = "Add Stories"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         user = intent.getParcelableExtra(EXTRA_USER)!!
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClients = LocationServices.getFusedLocationProviderClient(this)
 
         getPermission()
+        buttonListeners()
+    }
 
+    private fun buttonListeners() {
         binding.btnCameraX.setOnClickListener { startCameraX() }
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnUpload.setOnClickListener { uploadImage() }
@@ -76,8 +80,6 @@ class AddStroiesActivity : AppCompatActivity() {
                 lokasi = null
             }
         }
-
-
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -94,17 +96,19 @@ class AddStroiesActivity : AppCompatActivity() {
                 this.applicationContext,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
-        ) { // Location permission granted, then set lokasi
-            fusedLocationClient.lastLocation.addOnSuccessListener {
-                if (it != null) {
-                    lokasi = it
-                    Log.d(TAG, "Lat : ${it.latitude}, Lon : ${it.longitude}")
+        ) {
+            // Lokasi Permision diterima, lalu set lokasi
+            fusedLocationClients.lastLocation.addOnSuccessListener { location->
+                if (location != null) {
+                    lokasi = location
+                    Log.d(TAG, "Lat : ${location.latitude}, Lon : ${location.longitude}")
                 } else {
                     Helper.showToastLong(this, getString(R.string.enable_gps_permission))
                     binding.switchCompact.isChecked = false
                 }
             }
-        } else { // Location permission denied, then request permission
+        } else {
+            // Lokasi Permision ditoalk, Lalu Meminta akses
             requestPermissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION))
         }
     }
@@ -132,10 +136,10 @@ class AddStroiesActivity : AppCompatActivity() {
                     lon = lokasi?.longitude.toString().toRequestBody("text/plain".toMediaType())
                 }
 
-                // upload story
-                viewModel.postStories(user.token, description, imageMultipart, lat, lon).observe(this) {
-                    if (it != null) {
-                        when (it) {
+                // upload stories
+                viewModel.postStories(user.token, description, imageMultipart, lat, lon).observe(this) { resultResponse->
+                    if (resultResponse != null) {
+                        when (resultResponse) {
                             is ResultResponse.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
                             }
@@ -148,7 +152,7 @@ class AddStroiesActivity : AppCompatActivity() {
                                 binding.progressBar.visibility = View.GONE
                                 AlertDialog.Builder(this).apply {
                                     setTitle(getString(R.string.information))
-                                    setMessage(getString(R.string.upload_failed) + ", ${it.error}")
+                                    setMessage(getString(R.string.upload_failed) + ", ${resultResponse.error}")
                                     setPositiveButton(getString(R.string.continue_reading)) { _, _ ->
                                         binding.progressBar.visibility = View.GONE
                                     }
@@ -164,14 +168,13 @@ class AddStroiesActivity : AppCompatActivity() {
                 Helper.showToastShort(this@AddStroiesActivity, getString(R.string.no_attach_file))
             }
         }
-
     }
 
     private val launcherIntentGallery = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == RESULT_OK) {
-            val selectedImg: Uri = it.data?.data as Uri
+    ) { activityResult ->
+        if (activityResult.resultCode == RESULT_OK) {
+            val selectedImg: Uri = activityResult.data?.data as Uri
             val myFile = Helper.uriToFile(selectedImg, this@AddStroiesActivity)
             getFile = myFile
             binding.ivPreview.setImageURI(selectedImg)
@@ -182,15 +185,15 @@ class AddStroiesActivity : AppCompatActivity() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        val chooser = Intent.createChooser(intent, getString(R.string.choosepicture))
         launcherIntentGallery.launch(chooser)
     }
 
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == CAMERA_X_RESULT) {
-            val myFile = it.data?.getSerializableExtra("picture") as File
+    ) { activityResult ->
+        if (activityResult.resultCode == CAMERA_X_RESULT) {
+            val myFile = activityResult.data?.getSerializableExtra("picture") as File
 
             getFile = myFile
             result =
@@ -203,6 +206,10 @@ class AddStroiesActivity : AppCompatActivity() {
         launcherIntentCameraX.launch(Intent(this, CameraXActivity::class.java))
     }
 
+    private fun allPermissionsGranted()= REQUIRED_PERMISSIONS.all { allPermission ->
+        ContextCompat.checkSelfPermission(baseContext, allPermission) == PackageManager.PERMISSION_GRANTED
+    }
+
     private fun getPermission() {
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -211,10 +218,6 @@ class AddStroiesActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
-    }
-
-    private fun allPermissionsGranted()= REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onSupportNavigateUp(): Boolean {

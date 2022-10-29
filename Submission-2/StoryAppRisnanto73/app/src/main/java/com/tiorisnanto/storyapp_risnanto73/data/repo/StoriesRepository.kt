@@ -32,11 +32,11 @@ class StoriesRepository (
                 if (!response.error) {
                     emit(ResultResponse.Success(response))
                 } else {
-                    Log.e(TAG, "Register Fail: ${response.message}")
+                    Log.e(TAG, "Register Failed: ${response.message}")
                     emit(ResultResponse.Error(response.message))
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Register Exception: ${e.message.toString()} ")
+                Log.e(TAG, "Register Exceptions: ${e.message.toString()} ")
                 emit(ResultResponse.Error(e.message.toString()))
             }
         }
@@ -49,11 +49,11 @@ class StoriesRepository (
                 if (!response.error) {
                     emit(ResultResponse.Success(response.loginResult))
                 } else {
-                    Log.e(TAG, "Register Fail: ${response.message}")
+                    Log.e(TAG, "Register Failed: ${response.message}")
                     emit(ResultResponse.Error(response.message))
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Register Exception: ${e.message.toString()} ")
+                Log.e(TAG, "Register Exceptions: ${e.message.toString()} ")
                 emit(ResultResponse.Error(e.message.toString()))
             }
         }
@@ -66,12 +66,12 @@ class StoriesRepository (
                 if (!response.error) {
                     emit(ResultResponse.Success(response.listStories))
                 } else {
-                    Log.e(TAG, "GetStoryMap Fail: ${response.message}")
+                    Log.e(TAG, "GetStoriesMap Fail: ${response.message}")
                     emit(ResultResponse.Error(response.message))
                 }
 
             } catch (e: Exception) {
-                Log.e(TAG, "GetStoryMap Exception: ${e.message.toString()} ")
+                Log.e(TAG, "GetStoriesMap Exception: ${e.message.toString()} ")
                 emit(ResultResponse.Error(e.message.toString()))
             }
         }

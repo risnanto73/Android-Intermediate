@@ -5,15 +5,12 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.tiorisnanto.storyapp_risnanto73.MainActivity
 import com.tiorisnanto.storyapp_risnanto73.R
 import com.tiorisnanto.storyapp_risnanto73.activity.register.RegisterActivity
@@ -38,21 +35,21 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        buttonListener()
+        buttonListeners()
         playAnimation()
-        setMyButtonEnable()
-        editTextListener()
+        setButtonEnable()
+        editTextListeners()
 
 
     }
 
-    private fun editTextListener() {
+    private fun editTextListeners() {
         binding.etEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                setMyButtonEnable()
+                setButtonEnable()
             }
 
             override fun afterTextChanged(s: Editable) {
@@ -63,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                setMyButtonEnable()
+                setButtonEnable()
             }
 
             override fun afterTextChanged(s: Editable) {
@@ -76,12 +73,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun setMyButtonEnable() {
+    private fun setButtonEnable() {
         val resultPass = binding.etPass.text
         val resultEmail = binding.etEmail.text
 
-        binding.btnSignIn.isEnabled = resultPass != null && resultEmail != null &&
-                binding.etPass.text.toString().length >= 6 &&
+        binding.btnSignIn.isEnabled = resultEmail != null && resultPass != null &&
+                binding.etPass.text.toString().length >= 8 &&
                 Helper.isEmailValid(binding.etEmail.text.toString())
     }
 
@@ -136,24 +133,24 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun buttonListener() {
+    private fun buttonListeners() {
         binding.btnSignIn.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val pass = binding.etPass.text.toString()
 
-            loginViewModel.login(email, pass).observe(this) {
-                when (it) {
+            loginViewModel.login(email, pass).observe(this) { resultResponse ->
+                when (resultResponse) {
                     is ResultResponse.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is ResultResponse.Success -> {
                         binding.progressBar.visibility = View.GONE
                         val user = UserModel(
-                            it.data.name,
+                            resultResponse.data.name,
                             email,
                             pass,
-                            it.data.userId,
-                            it.data.token,
+                            resultResponse.data.userId,
+                            resultResponse.data.token,
                             true
                         )
                         showAlertDialog(true, getString(R.string.login_success))
@@ -165,7 +162,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                     is ResultResponse.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        showAlertDialog(false, it.error)
+                        showAlertDialog(false, resultResponse.error)
                     }
                 }
             }

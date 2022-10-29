@@ -12,9 +12,9 @@ interface StoriesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStories(storiesEntity: List<ListStoriesItem>)
 
-    @Query("SELECT * FROM story")
+    @Query("SELECT * FROM stories")
     fun getStories(): PagingSource<Int, ListStoriesItem>
 
-    @Query("DELETE FROM story")
+    @Query("DELETE FROM stories")
     suspend fun deleteAll()
 }

@@ -69,21 +69,21 @@ class StoriesRemoteMediator(
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ListStoriesItem>): RemoteKeys? {
-        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let {
-            database.remoteKeysDao().getRemoteKeysId(it.id)
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { repo ->
+            database.remoteKeysDao().getRemoteKeysId(repo.id)
         }
     }
 
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ListStoriesItem>): RemoteKeys? {
-        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let {
-            database.remoteKeysDao().getRemoteKeysId(it.id)
+        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { repo ->
+            database.remoteKeysDao().getRemoteKeysId(repo.id)
         }
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, ListStoriesItem>): RemoteKeys? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let {
-                database.remoteKeysDao().getRemoteKeysId(it)
+            state.closestItemToPosition(position)?.id?.let { repoId ->
+                database.remoteKeysDao().getRemoteKeysId(repoId)
             }
         }
     }

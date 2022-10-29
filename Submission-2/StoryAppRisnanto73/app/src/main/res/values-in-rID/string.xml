@@ -7,9 +7,9 @@
     <string name="invalid_username">Username tidak valid</string>
     <string name="invalid_email">Email tidak valid</string>
     <string name="must_filled">Harus diisi</string>
-    <string name="invalid_password">Password harus >5 karakter</string>
+    <string name="invalid_password">Password harus >7 karakter</string>
     <string name="change_language">Ganti Bahasa</string>
-    <string name="this_is_a_test">Story App V1</string>
+    <string name="app_verison">Story App V2</string>
     <string name="logout">Keluar</string>
     <string name="continue_reading">Lanjutkan Membaca</string>
     <string name="looks_like_you_haven_t_read_any_stories_yet">Sepertinya Anda belum membaca cerita apapun</string>
@@ -51,4 +51,10 @@
     <string name="error_occurred">Ada yang error</string>
     <string name="retry">Ulang</string>
     <string name="something_wrong">Ada yang salah</string>
+    <string name="choosepicture">Pilih gambar</string>
+    <string name="back">kembali</string>
+    <string name="back_success">Kembali Sukses</string>
+    <string name="detail_title"> Detail Cerita</string>
+    <string name="name">Name </string>
+    <string name="settings">Setting </string>
 </resources>

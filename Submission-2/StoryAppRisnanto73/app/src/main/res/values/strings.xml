@@ -6,9 +6,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_email">Not a valid email</string>
     <string name="must_filled">Must be filled</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_password">Password must be >7 characters</string>
     <string name="change_language">Change Language</string>
-    <string name="this_is_a_test">Story App V1</string>
+    <string name="app_verison">Story App V2</string>
     <string name="logout">logout</string>
     <string name="continue_reading">Continue Reading</string>
     <string name="looks_like_you_haven_t_read_any_stories_yet">Looks like you haven\'t read any stories yet</string>
@@ -50,5 +50,11 @@
     <string name="error_occurred">Some Error Occurred</string>
     <string name="retry">Retry</string>
     <string name="something_wrong">something wrong</string>
+    <string name="choosepicture">Choose a Picture</string>
+    <string name="back">back</string>
+    <string name="back_success">Back Success</string>
+    <string name="detail_title"> Details Stories</string>
+    <string name="name">Name :</string>
+    <string name="settings">Setting</string>
 
 </resources>

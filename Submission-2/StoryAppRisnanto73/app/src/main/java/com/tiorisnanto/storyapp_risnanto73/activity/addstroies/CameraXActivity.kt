@@ -1,11 +1,8 @@
 package com.tiorisnanto.storyapp_risnanto73.activity.addstroies
 
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -27,6 +24,7 @@ class CameraXActivity : AppCompatActivity() {
         binding = ActivityCameraXactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Support Action Bar
         supportActionBar?.hide()
 
         binding.captureImage.setOnClickListener { takePhoto() }
@@ -42,8 +40,6 @@ class CameraXActivity : AppCompatActivity() {
         supportActionBar?.hide()
         startCamera()
     }
-
-
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)

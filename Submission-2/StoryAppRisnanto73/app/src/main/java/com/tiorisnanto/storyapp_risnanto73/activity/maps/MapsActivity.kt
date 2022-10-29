@@ -44,6 +44,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Support Action Bar
+        val actionbar = supportActionBar
+        actionbar!!.title = "Maps"
+        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayShowHomeEnabled(true)
+
         user = intent.getParcelableExtra(EXTRA_USER)!!
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -103,15 +109,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun showData() {
         val boundsBuilder = LatLngBounds.Builder()
-        viewModel.getStories(user.token).observe(this) {
-            if (it != null) {
-                when (it) {
+        viewModel.getStories(user.token).observe(this) {resultResponse->
+            if (resultResponse != null) {
+                when (resultResponse) {
                     is ResultResponse.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is ResultResponse.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        it.data.forEachIndexed { _, element ->
+                        resultResponse.data.forEachIndexed { _, element ->
                             val lastLatLng = LatLng(element.lat, element.lon)
 
                             mMap.addMarker(MarkerOptions().position(lastLatLng).title(element.id))
@@ -127,5 +133,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

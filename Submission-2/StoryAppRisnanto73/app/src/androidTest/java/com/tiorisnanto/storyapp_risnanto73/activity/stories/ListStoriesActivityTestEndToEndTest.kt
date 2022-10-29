@@ -124,7 +124,6 @@ class ListStoriesActivityTestEndToEndTest {
         scenario = launchActivity(intent)
 
         onView(withId(R.id.iv_add_story)).perform(longClick())
-//        onView(withId(R.id.iv_add_story)).perform(ViewActions.click())
         onView(withId(R.id.btn_gallery))
             .check(matches(ViewMatchers.isDisplayed()))
         onView(withId(R.id.btn_camera_x))

@@ -35,17 +35,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //SupportActionBar
         supportActionBar?.hide()
+
         setupViewModel()
         playAnimation()
         buttonListener()
+
     }
 
     private fun buttonListener() {
         binding.btnLisStory.setOnClickListener {
-            val moveToListStoryActivity = Intent(this@MainActivity, ListStoriesActivity::class.java)
-            moveToListStoryActivity.putExtra(ListStoriesActivity.EXTRA_USER, user)
-            startActivity(moveToListStoryActivity)
+            val moveToListStoriesActivity = Intent(this@MainActivity, ListStoriesActivity::class.java)
+            moveToListStoriesActivity.putExtra(ListStoriesActivity.EXTRA_USER, user)
+            startActivity(moveToListStoriesActivity)
         }
         binding.ivSetting?.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))

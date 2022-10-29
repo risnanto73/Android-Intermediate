@@ -43,7 +43,7 @@ class MyEditTextPassword : TextInputEditText, View.OnTouchListener {
     }
 
     private fun init() {
-        eyeIcon = ContextCompat.getDrawable(context, R.drawable.ic_eye_off) as Drawable // x button
+        eyeIcon = ContextCompat.getDrawable(context, R.drawable.ic_eye_off) as Drawable // x buttons
 
         setOnTouchListener(this)
 
@@ -58,7 +58,7 @@ class MyEditTextPassword : TextInputEditText, View.OnTouchListener {
 
             override fun afterTextChanged(s: Editable) {
                 // check input
-                if (s.toString().length < 6) showError()
+                if (s.toString().length < 8) showError()
             }
         })
     }

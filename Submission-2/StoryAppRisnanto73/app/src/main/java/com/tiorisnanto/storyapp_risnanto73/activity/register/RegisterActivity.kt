@@ -67,8 +67,8 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.etEmail.text.toString()
             val password = binding.etPass.text.toString()
 
-            registerViewModel.register(name, email, password).observe(this){
-                when (it) {
+            registerViewModel.register(name, email, password).observe(this){ resultResponse ->
+                when (resultResponse) {
                     is ResultResponse.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
@@ -78,7 +78,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     is ResultResponse.Error -> {
                         binding.progressBar.visibility = View.GONE
-                        showAlertDialog(false, it.error)
+                        showAlertDialog(false, resultResponse.error)
                     }
                 }
             }
@@ -149,7 +149,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.btnRegister.isEnabled =
             binding.etEmail.text.toString().isNotEmpty() &&
                     binding.etPass.text.toString().isNotEmpty() &&
-                    binding.etPass.text.toString().length >= 6 &&
+                    binding.etPass.text.toString().length >= 8 &&
                     Helper.isEmailValid(binding.etEmail.text.toString())
     }
 }

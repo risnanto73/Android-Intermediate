@@ -5,12 +5,12 @@
             - Memastikan bahwa stories tampil
             - Kemudian => Memastikan stories terbaru yang terbuka
 
-        ### getStory_Error() [Pengecekan pengambilan data stories dari network]
+        ### getStories_Error() [Pengecekan pengambilan data stories dari network]
             - Memastikan bahwa stories tampil, jika ada dalam local database
             - Memastikan bahwa TextView "something went wrong." tampil dilayar
  
  #### END TO END TEST @LargeTest ####
-    #### ListStoryActivityEndToEndTest
+    #### ListStoriesActivityEndToEndTest
         ### loadListStories()
             - Asumsi user telah melakukan login
             - Kemudian => List Stories telaj muncul
@@ -34,7 +34,7 @@
             - Melakukan aksi klik pada tombol untuk melihat stories pada Googgle map tampil
             - Memastikan bahwa map tampil
 
-        ### loadAddStory()
+        ### loadAddStories()
             - Asumsi user telah login
             - Kemudian => Melihat List Cerita
             - Kemudian => Melakukan aksi klik pada tombol untuk posting stories
@@ -54,7 +54,7 @@
             
         ### DetailStoriesViewModelTest ###
             - Ketika function `when setDetails() is called Should Success`() berhasil menampilkan data stories,
-            - Maka => expectedStories sama dengan dummyStory,
+            - Maka => expectedStories sama dengan dummyStories,
             - Sehingga => actualStories sama dengan itemStories,
             - Sehingga => dan actualStories sama
             
@@ -93,7 +93,7 @@
             - Kemudian => memastikan bahwa actualResponse tidak kosong,
             - Sehingga =>  dan ResultResponse.Error
             
-        ### ListStoryViewModelTest ###
+        ### ListStoriesViewModelTest ###
             - Apabila => function `when Get Stories Should Not Null`() berhasil mendapatkan data list stories,
             - Kemudian => memastikan bahwa data tidak kosong,
             - Kemudian => memastikan bahwa ukuran data asli dengan data dummy sama 
