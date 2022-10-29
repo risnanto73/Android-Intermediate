@@ -97,13 +97,6 @@ class ListStoriesActivityTestEndToEndTest {
         )
         Intents.intended(hasComponent(DetailsActivity::class.java.name))
         onView(withId(R.id.tv_name))
-            .check(matches(ViewMatchers.isDisplayed()))
-        onView(withId(R.id.tv_description))
-            .check(matches(ViewMatchers.isDisplayed()))
-        onView(withId(R.id.tv_name))
-            .check(matches(ViewMatchers.isDisplayed()))
-        onView(withId(R.id.tv_name))
-            .check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test

@@ -1,8 +1,6 @@
 package com.tiorisnanto.storyapp_risnanto73.activity.main
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.tiorisnanto.storyapp_risnanto73.data.model.UserModel
 import com.tiorisnanto.storyapp_risnanto73.data.model.UserPreferences

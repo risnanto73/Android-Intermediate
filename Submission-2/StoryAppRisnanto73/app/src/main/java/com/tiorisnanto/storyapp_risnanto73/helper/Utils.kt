@@ -1,25 +1,18 @@
 package com.tiorisnanto.storyapp_risnanto73.helper
 
-import android.annotation.SuppressLint
 import com.tiorisnanto.storyapp_risnanto73.R
 import java.io.*
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.*
 import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.util.Patterns
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 
 object Helper {
 
